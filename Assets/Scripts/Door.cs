@@ -62,21 +62,36 @@ public class Door : MonoBehaviour
         Debug.Log("close");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.tag == "Ball")
         {
-            cannotClose = true;
-            Debug.Log("cannot close");
+            if(collision.GetComponent<Ball>().targetTransf != null)
+            {
+                cannotClose = true;
+            }
+            else
+            {
+                cannotClose = false;
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.tag == "Ball")
-        {
-            cannotClose = false;
-            Debug.Log("can close");
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.tag == "Ball")
+    //    {
+    //        cannotClose = true;
+    //        Debug.Log("cannot close");
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "Ball")
+    //    {
+    //        cannotClose = false;
+    //        Debug.Log("can close");
+    //    }
+    //}
 }

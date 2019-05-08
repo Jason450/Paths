@@ -390,9 +390,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 136010562}
+  - component: {fileID: 136010563}
   m_Layer: 0
   m_Name: Point 4A
-  m_TagString: Untagged
+  m_TagString: RightPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -410,6 +411,21 @@ Transform:
   m_Father: {fileID: 1203689315}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &136010563
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 136010561}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.0001
 --- !u!1 &141469528
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +800,7 @@ GameObject:
   - component: {fileID: 458078326}
   m_Layer: 0
   m_Name: Door 1
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1050,9 +1066,10 @@ GameObject:
   m_Component:
   - component: {fileID: 546860919}
   - component: {fileID: 546860920}
+  - component: {fileID: 546860921}
   m_Layer: 0
   m_Name: Point 1A
-  m_TagString: Untagged
+  m_TagString: LeftPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1085,6 +1102,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.0001
+--- !u!114 &546860921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 546860918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd016a38a5cf324da8daac0a5db8206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftPoint: {fileID: 0}
+  rightPoint: {fileID: 0}
 --- !u!1 &587846350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1983,6 +2013,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBallState: 0
+  vertical: 0
+  horizontal: 0
+  leftToRight: 0
+  rightToLeft: 0
   speed: 0.5
   transf: {fileID: 0}
   targetTransf: {fileID: 0}
@@ -2008,7 +2042,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.5
 --- !u!50 &964622106
 Rigidbody2D:
   serializedVersion: 4
@@ -2226,9 +2260,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049937038}
+  - component: {fileID: 1049937039}
   m_Layer: 0
   m_Name: Point 3A
-  m_TagString: Untagged
+  m_TagString: LeftPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2246,6 +2281,21 @@ Transform:
   m_Father: {fileID: 844910470}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1049937039
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1049937037}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.0001
 --- !u!1 &1077045521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2307,7 @@ GameObject:
   - component: {fileID: 1077045523}
   m_Layer: 0
   m_Name: Point 2A
-  m_TagString: Untagged
+  m_TagString: RightPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3304,6 +3354,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBallState: 0
+  vertical: 0
+  horizontal: 0
+  leftToRight: 0
+  rightToLeft: 0
   speed: 0
   transf: {fileID: 0}
   targetTransf: {fileID: 0}
@@ -3382,7 +3436,7 @@ GameObject:
   - component: {fileID: 2092687908}
   m_Layer: 0
   m_Name: Door 1
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

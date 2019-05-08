@@ -10,6 +10,11 @@ public class Ball : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Vector2 position;
 
+    public bool vertical;
+    public bool horizontal;
+    public bool leftToRight;
+    public bool rightToLeft;
+
     public float speed;
     public Transform transf;
     public Transform targetTransf;
@@ -74,18 +79,70 @@ public class Ball : MonoBehaviour
         position = transf.localPosition;
 
         currentBallState = BallState.Moving;
+
+        vertical = true;
     }
 
     void Moving()
     {
-        transf.localPosition = position;
-        position.y -= speed * Time.deltaTime;
+        if(vertical)
+        {
+            position.y -= speed * Time.deltaTime;
+            transf.localPosition = position;
+        }
+
+        if(horizontal)
+        {
+            transf.localPosition = Vector2.MoveTowards(transform.position, targetTransf.position, Time.deltaTime * speed);
+
+            if(transf.localPosition == targetTransf.position)
+            {
+                horizontal = false;
+                vertical = true;
+                leftToRight = false;
+                rightToLeft = false;
+            }
+        }
     }
 
     #endregion
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("colliding" + collision);
+        if(collision.tag == "Door")
+        {
+            if(leftToRight)
+            {
+                targetTransf = collision.GetComponent<Door>().rightPoint.transform;
+            }
+
+            if(rightToLeft)
+            {
+                targetTransf = collision.GetComponent<Door>().leftPoint.transform;
+            }
+        }
+
+        if (collision.tag == "LeftPoint")
+        {
+            if (position.y <= collision.transform.localPosition.y && vertical && targetTransf == null)
+            {
+                leftToRight = true;
+                rightToLeft = false;
+                vertical = false;
+                horizontal = true;
+            }
+        }
+
+        if (collision.tag == "RightPoint")
+        {
+            if (position.y <= collision.transform.localPosition.y && vertical && targetTransf == null)
+            {
+                rightToLeft = true;
+                leftToRight = false;
+                vertical = false;
+                horizontal = true;
+            }
+        }
+        Debug.Log("colliding " + collision);
     }
 }

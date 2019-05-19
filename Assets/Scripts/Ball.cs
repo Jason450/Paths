@@ -7,14 +7,13 @@ public class Ball : MonoBehaviour
     public enum BallState { Inactive, NextDisplay, GetStart, Moving }
     public BallState currentBallState;
 
+    public bool changingPath;
+    public bool nextTarget;
+    public bool detectingDoor;
+
     SpriteRenderer spriteRenderer;
-    Vector2 position;
-
-    public bool vertical;
-    public bool horizontal;
-    public bool leftToRight;
-    public bool rightToLeft;
-
+    //Vector2 position;
+    
     public float speed;
     public Transform transf;
     public Transform targetTransf;
@@ -28,6 +27,9 @@ public class Ball : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         transf = GetComponent<Transform>();
         currentBallState = BallState.Inactive;
+        changingPath = false;
+        nextTarget = false;
+        detectingDoor = false;
 	}
 	
 	void Update ()
@@ -76,31 +78,24 @@ public class Ball : MonoBehaviour
     void GetStart()
     {
         transf.localPosition = starts[Random.Range(0, 4)].localPosition;
-        position = transf.localPosition;
+        //position = transf.localPosition;
 
         currentBallState = BallState.Moving;
-
-        vertical = true;
     }
 
     void Moving()
     {
-        if(vertical)
-        {
-            position.y -= speed * Time.deltaTime;
-            transf.localPosition = position;
-        }
-
-        if(horizontal)
+        if(targetTransf != null)
         {
             transf.localPosition = Vector2.MoveTowards(transform.position, targetTransf.position, Time.deltaTime * speed);
 
-            if(transf.localPosition == targetTransf.position)
+            if (transform.position == targetTransf.position)
             {
-                horizontal = false;
-                vertical = true;
-                leftToRight = false;
-                rightToLeft = false;
+                nextTarget = true;
+            }
+            else
+            {
+                nextTarget = false;
             }
         }
     }
@@ -109,40 +104,39 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "Door")
+        if(collision.tag == "StartPoint")
         {
-            if(leftToRight)
-            {
-                targetTransf = collision.GetComponent<Door>().rightPoint.transform;
-            }
+            targetTransf = collision.GetComponent<StartPoint>().nextPoint.transform;
+        }
 
-            if(rightToLeft)
+        if(collision.tag == "Point")
+        {
+            if(nextTarget)
             {
-                targetTransf = collision.GetComponent<Door>().leftPoint.transform;
+                if (detectingDoor && !changingPath)
+                {
+                    targetTransf = collision.GetComponent<Point>().sidePoint.transform;
+                    changingPath = true;
+                    detectingDoor = false;
+                }
+                else
+                {
+                    targetTransf = collision.GetComponent<Point>().downPoint.transform;
+                    changingPath = false;
+                }
             }
         }
 
-        if (collision.tag == "LeftPoint")
+        if (collision.tag == "Door")
         {
-            if (position.y <= collision.transform.localPosition.y && vertical && targetTransf == null)
+            if (collision.GetComponent<Door>().open)
             {
-                leftToRight = true;
-                rightToLeft = false;
-                vertical = false;
-                horizontal = true;
+                detectingDoor = true;
+            }
+            else
+            {
+                detectingDoor = false;
             }
         }
-
-        if (collision.tag == "RightPoint")
-        {
-            if (position.y <= collision.transform.localPosition.y && vertical && targetTransf == null)
-            {
-                rightToLeft = true;
-                leftToRight = false;
-                vertical = false;
-                horizontal = true;
-            }
-        }
-        Debug.Log("colliding " + collision);
     }
 }

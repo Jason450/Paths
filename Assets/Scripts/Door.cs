@@ -7,8 +7,8 @@ public class Door : MonoBehaviour
     public bool open;
     public bool cannotClose;
 
-    public GameObject leftPoint;
-    public GameObject rightPoint;
+    //public GameObject leftPoint;
+    //public GameObject rightPoint;
 
     SpriteRenderer spriteRenderer;
 
@@ -48,16 +48,16 @@ public class Door : MonoBehaviour
 
     void Open()
     {
-        leftPoint.SetActive(true);
-        rightPoint.SetActive(true);
+        //leftPoint.SetActive(true);
+        //rightPoint.SetActive(true);
         spriteRenderer.color = new Color(255, 255, 255);
         Debug.Log("open");
     }
 
     void Close()
     {
-        leftPoint.SetActive(false);
-        rightPoint.SetActive(false);
+        //leftPoint.SetActive(false);
+        //rightPoint.SetActive(false);
         spriteRenderer.color = new Color(0, 0, 0);
         Debug.Log("close");
     }
@@ -66,7 +66,7 @@ public class Door : MonoBehaviour
     {
         if(collision.tag == "Ball")
         {
-            if(collision.GetComponent<Ball>().targetTransf != null)
+            if(collision.GetComponent<Ball>().changingPath == true)
             {
                 cannotClose = true;
             }

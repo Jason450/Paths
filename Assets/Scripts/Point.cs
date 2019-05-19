@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Point : MonoBehaviour
 {
-    public GameObject leftPoint;
-    public GameObject rightPoint;
+    public GameObject sidePoint;
+    public GameObject downPoint;
 }

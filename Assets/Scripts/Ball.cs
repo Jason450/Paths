@@ -92,10 +92,12 @@ public class Ball : MonoBehaviour
             if (transform.position == targetTransf.position)
             {
                 nextTarget = true;
+                Debug.Log("getting next target");
             }
             else
             {
                 nextTarget = false;
+                Debug.Log("nexttarget false");
             }
         }
     }
@@ -117,13 +119,28 @@ public class Ball : MonoBehaviour
                 {
                     targetTransf = collision.GetComponent<Point>().sidePoint.transform;
                     changingPath = true;
-                    detectingDoor = false;
+                    //detectingDoor = false;
                 }
                 else
                 {
                     targetTransf = collision.GetComponent<Point>().downPoint.transform;
                     changingPath = false;
                 }
+            }
+        }
+
+        if (collision.tag == "EndPoint")
+        {
+            if ((targetTransf.position != null) && (transform.position == targetTransf.position))
+            {
+                targetTransf = null;
+                currentBallState = BallState.Inactive;
+                //speed += 0.25f;
+                Debug.Log("ball arrived to end point");
+            }
+            else
+            {
+                return;
             }
         }
 
